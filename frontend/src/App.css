@@ -1,44 +1,32 @@
+/* Estilo general de la aplicación */
 .App {
   font-family: 'Poppins', sans-serif;
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
-  background: linear-gradient(135deg, #f6f9fc 0%, #eef5ff 100%);
+  background: linear-gradient(135deg, #f6f9fc, #eef5ff);
   min-height: 100vh;
   display: grid;
   gap: 2rem;
 }
 
+/* Encabezado */
 .App-header {
-  background: linear-gradient(120deg, #4776E6 0%, #8E54E9 100%);
+  background: linear-gradient(120deg, #4776E6, #8E54E9);
   color: white;
   padding: 3rem;
   border-radius: 30px;
   text-align: center;
-  position: relative;
-  overflow: hidden;
   box-shadow: 0 20px 40px rgba(71, 118, 230, 0.2);
 }
 
-.App-header h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin: 0;
-  background: linear-gradient(to right, #fff, #e0e7ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
+/* Secciones */
 section {
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 2.5rem;
+  padding: 2.5rem;  
   border-radius: 24px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.4s ease;
 }
 
 section:hover {
@@ -46,81 +34,27 @@ section:hover {
   box-shadow: 0 20px 40px rgba(71, 118, 230, 0.1);
 }
 
-.control-panel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
+/* Botones */
 button {
   background: linear-gradient(45deg, #4776E6, #8E54E9);
   color: white;
-  border: none;
   padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
   box-shadow: 0 5px 15px rgba(71, 118, 230, 0.2);
 }
 
 button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(71, 118, 230, 0.4);
-  background: linear-gradient(45deg, #3567d7, #7b43da);
 }
 
-button:active {
-  transform: translateY(1px);
-}
-
-textarea {
-  width: 100%;
-  padding: 1.5rem;
-  border: 2px solid #e0e7ff;
-  border-radius: 16px;
-  font-size: 1rem;
-  line-height: 1.6;
-  background: #ffffff;
-  transition: all 0.3s ease;
-  resize: none;
-  min-height: 150px;
-  font-family: 'Source Code Pro', monospace;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #4776E6;
-  box-shadow: 0 0 0 4px rgba(71, 118, 230, 0.1);
-}
-
-.texto-encriptado {
-  background: linear-gradient(145deg, #ffffff, #f6f9fc);
-  padding: 2rem;
-  border-radius: 20px;
-  margin-top: 2rem;
-}
-
-.texto-encriptado p {
-  font-family: 'Source Code Pro', monospace;
-  background: #f8faff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin: 1rem 0;
-  color: #4776E6;
-  border-left: 4px solid #4776E6;
-}
-
+/* Tablas */
 table {
   width: 100%;
-  border-spacing: 0;
   margin: 2rem 0;
   border-radius: 16px;
-  overflow: hidden;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -128,36 +62,25 @@ table th {
   background: linear-gradient(45deg, #4776E6, #8E54E9);
   color: white;
   padding: 1.2rem;
-  font-weight: 600;
-  text-align: left;
 }
 
 table td {
   padding: 1.2rem;
-  border-bottom: 1px solid #e0e7ff;
   background: white;
 }
 
-table tr:last-child td {
-  border-bottom: none;
-}
+/* Mensajes de error
+de la API */ 
 
 .error-mensaje {
   background: linear-gradient(45deg, #FF416C, #FF4B2B);
   color: white;
   padding: 1.5rem;
   border-radius: 16px;
-  margin-top: 1.5rem;
-  font-weight: 500;
   box-shadow: 0 8px 20px rgba(255, 65, 108, 0.2);
-  animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
   .App {
     padding: 1.5rem;
@@ -165,10 +88,6 @@ table tr:last-child td {
   
   .App-header {
     padding: 2rem;
-  }
-  
-  .App-header h1 {
-    font-size: 2.5rem;
   }
   
   section {
