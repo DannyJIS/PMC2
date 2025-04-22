@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify, send_file # type: ignore
 from flask_cors import CORS # type: ignore
 import os
-import base64
-from huffman import ArbolHuffman  
+import base64  
+from arbol import ArbolHuffman
 
 app = Flask(__name__)
 CORS(app) 
@@ -17,14 +17,14 @@ def encriptar():
     if not texto:
         return jsonify({'error': 'El texto no puede estar vacío'}), 400
     
-    # Crea el árbol de Huffman
+    # Crea el árbol
     huffman = ArbolHuffman()
     huffman.generar_arbol(texto)
     
     # Encripta el texto
     texto_encriptado = huffman.encriptar()
     
-    # ID único para esta sesión
+    # ID único para la sesión
     import uuid
     session_id = str(uuid.uuid4())
     session_trees[session_id] = huffman

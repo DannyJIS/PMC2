@@ -2,33 +2,7 @@ import heapq
 from collections import Counter
 import graphviz # type: ignore
 import os
-
-class NodoHuffman:
-    def __init__(self, caracter=None, frecuencia=0):
-        self.caracter = caracter
-        self.frecuencia = frecuencia
-        self.izquierda = None
-        self.derecha = None
-        self.id = id(self)
-        
-    def __lt__(self, otro):
-        # Primero compara por frecuencia
-        if self.frecuencia != otro.frecuencia:
-            return self.frecuencia < otro.frecuencia
-        
-        # Si las frecuencias son iguales, pero uno tiene carácter y el otro no
-        if self.caracter is not None and otro.caracter is None:
-            return True
-        if self.caracter is None and otro.caracter is not None:
-            return False
-            
-        # Si ambos tienen carácter solo compara los caracteres
-        if self.caracter is not None and otro.caracter is not None:
-            # Comparación basada en el código ASCII 
-            return self.caracter < otro.caracter
-            
-        # Si ninguno tiene carácter entonces usa el ID para un llevar un orden 
-        return self.id < otro.id
+from nodo import NodoHuffman
 
 class ArbolHuffman:
     def __init__(self):
@@ -73,11 +47,11 @@ class ArbolHuffman:
         if nodo is None:
             return
         
-        # Si es un nodo hoja, es decir si tiene un caracter, almacenar su código
+        # Si es un nodo hoja es decir si tiene un caracter almacena el código
         if nodo.caracter is not None:
             self.codigos[nodo.caracter] = codigo_actual
         
-        # Generar los códigos de las ramas, para izquierda 0 y para derecha 1
+        # Genera los códigos de las ramas, para izquierda 0 y para derecha 1
         self._generar_codigos(nodo.izquierda, codigo_actual + "0")
         self._generar_codigos(nodo.derecha, codigo_actual + "1")
     
@@ -96,7 +70,7 @@ class ArbolHuffman:
     
     def desencriptar(self, texto_encriptado):
         if not self.raiz:
-            return "Error: El árbol Huffman no ha sido generado."
+            return "Error: El árbol no ha sido generado."
             
         texto_desencriptado = ""
         nodo_actual = self.raiz
@@ -104,7 +78,7 @@ class ArbolHuffman:
         for bit in texto_encriptado:
             if bit == '0':
                 nodo_actual = nodo_actual.izquierda
-            else:  # bit == '1'
+            else:
                 nodo_actual = nodo_actual.derecha
                 
             # Llega a un nodo hoja
@@ -119,14 +93,13 @@ class ArbolHuffman:
             return "Error: El árbol Huffman no ha sido generado."
             
         dot = graphviz.Digraph(comment='Árbol de Huffman')
-        
-        # Añade nodos al grafo
+      
         def agregar_nodos(nodo, id_nodo=0):
             if nodo is None:
                 return
                 
-            # Añade el nodo actual
-            etiqueta = str(nodo.frecuencia)
+            # Añade el ID del nodo y su frecuencia al arbol
+            etiqueta = str(nodo.frecuencia) #
             if nodo.caracter is not None:
                 if nodo.caracter == ' ':
                     etiqueta += "\nespacio"
@@ -135,7 +108,7 @@ class ArbolHuffman:
                     
             dot.node(str(id_nodo), etiqueta)
             
-            # Añade hijos y conexiones 
+            # Añade hijos y sus ramas 
             if nodo.izquierda:
                 id_izq = id_nodo * 2 + 1
                 agregar_nodos(nodo.izquierda, id_izq)
@@ -167,32 +140,10 @@ class ArbolHuffman:
                 caracteres_vistos[caracter] = True
                 orden_original.append(caracter)
         
-        # Genera la tabla usando el orden original
+        # Hace la tabla usando el orden de ingreso original
         tabla = []
         for caracter in orden_original:
             nombre_caracter = "espacio" if caracter == " " else caracter
             tabla.append((nombre_caracter, self.codigos[caracter]))
             
         return tabla
-        
-# PRUEBA
-if __name__ == "__main__":
-    huffman = ArbolHuffman()
-    texto = "Hola Mundo"
-    
-    huffman.generar_arbol(texto)
-    texto_encriptado = huffman.encriptar()
-    
-    print(f"Texto original: {texto}")
-    print(f"Texto encriptado: {texto_encriptado}")
-    
-    tabla_codigos = huffman.generar_tabla_codigos()
-    print("\nTabla de códigos:")
-    for caracter, codigo in tabla_codigos:
-        print(f"{caracter}: {codigo}")
-    
-    archivo_pdf = huffman.exportar_arbol()
-    print(f"\nÁrbol exportado como: {archivo_pdf}")
-    
-    texto_desencriptado = huffman.desencriptar(texto_encriptado)
-    print(f"\nTexto desencriptado: {texto_desencriptado}")
